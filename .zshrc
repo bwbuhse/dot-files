@@ -1,0 +1,77 @@
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' matcher-list '' '' '' 'r:|[._-]=** r:|=**'
+zstyle :compinstall filename '/home/ben/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd extendedglob nomatch notify
+bindkey -v
+# End of lines configured by zsh-newuser-install
+
+##############
+# my zsh cfg #
+##############
+
+# Load uh... the prompt?
+autoload -Uz promptinit
+promptinit
+
+# Fuzzy finder - find in file
+# find-in-file - usage: fif <searchTerm>
+fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+# Detach from current tmux session and create a new one
+# tmdn() { 
+#   if [[ -v $1 ]]; then 
+#     tmux detach -E "tmux new -A -s '$1'"; 
+#   else
+#     echo 'You need to give a session name';
+#   fi
+# }
+
+# tmda() {
+#   if [[ -v $1 ]]; then 
+#     tmux detach -E "tmux attach -t '$1'"; 
+#   else
+#     echo 'You need to give a session name';
+#   fi
+# }
+
+##############
+# my aliases #
+##############
+
+alias ll='ls -lph'
+
+alias kill-zoom='pkill -9 -f zoom'
+
+alias pacman-deps="pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
+
+alias vimf='cscope -Rb && vim $(fzf)'
+
+# Used to log into the kamek server that UT has with one command
+alias kamek='ssh bbuhse@kamek.ece.utexas.edu'
+
+# These lines are just for ee461s
+export PINTOS=/home/ben/projects/os-sp20-team-bumo
+export PATH=$PATH:$PINTOS/utils
+
+# Used to easily get to conky directory
+export CONKY_DIR=/home/ben/.config/conky
+
+# Set VA-API driver
+export LIBVA_DRIVER_NAME='iHD'
+
+# Run presto
+source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
