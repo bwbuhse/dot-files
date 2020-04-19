@@ -231,6 +231,11 @@ default_floating_border pixel 2
 #
 bindsym Ctrl+Alt+l exec 'swaylock -f -c 2e3440'
 
+#
+# Screenshots:
+#
+bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
+
 gaps outer 16
 gaps inner 8
 
