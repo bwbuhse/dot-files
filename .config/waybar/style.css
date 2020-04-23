@@ -20,14 +20,14 @@ window#waybar {
     background: #4c566a;
 }
 
-#network, #mode, #battery {
-    padding: 0 10px;
-    margin: 0 5px;
+#memory, #network, #mode{
+    padding: 0 8px;
+    margin: 0 3px;
 }
 
-#clock {
-    padding: 0 10px 0 0;
-    margin: 0 5px 0 0;
+#backlight, #tray, #cpu, #clock, #battery {
+    padding: 0 8px 0 0;
+    margin: 0 3px 0 0;
 }
 
 

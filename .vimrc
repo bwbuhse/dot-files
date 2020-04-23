@@ -25,6 +25,8 @@ Plug 'tpope/vim-commentary'
 
 Plug 'junegunn/fzf'
 
+Plug 'rust-lang/rust.vim'
+
 call plug#end()
 
 " general stuff
@@ -85,5 +87,8 @@ let g:ycm_confirm_extra_conf = 0
 
 " Always enable preview window on the right with 60% width
 let g:fzf_preview_window = 'right:60%'
+
+" Enable rustfmt on buffer same
+let g:rustfmt_autosave = 1
 
 set nocscopeverbose

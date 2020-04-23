@@ -87,12 +87,15 @@ alias vimf='cscope -Rb && vim $(fzf)'
 # Used to log into the kamek server that UT has with one command
 alias kamek='ssh bbuhse@kamek.ece.utexas.edu'
 
+##############
+# my exports #
+##############
+
 # These lines are just for ee461s
 export PINTOS=/home/ben/projects/os-sp20-team-bumo
-export PATH=$PATH:$PINTOS/utils
 
-# Used to easily get to conky directory
-export CONKY_DIR=/home/ben/.config/conky
+# For rust stuff ?? 
+export PATH=$PATH:$PINTOS/utils:/home/ben/.cargo/bin
 
 # Set VA-API driver
 export LIBVA_DRIVER_NAME='iHD'

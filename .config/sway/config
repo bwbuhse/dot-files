@@ -25,7 +25,8 @@ set $menu j4-dmenu-desktop --dmenu='bemenu -b -i --tb "#2e3440" --tf "#ffffff" -
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/ben/Pictures/mountain_wallpaper_right.png fill
+output eDP-1 bg /home/ben/Pictures/mountain_wallpaper_right.png fill
+output DP-2 bg /home/ben/Pictures/mountain_wallpaper.png fill
 #
 # Example configuration:
 #
@@ -35,11 +36,15 @@ output * bg /home/ben/Pictures/mountain_wallpaper_right.png fill
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 2e3440' \
+         timeout 300 'swaylock-blur -- -f ' \
          timeout 600 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 2e3440'
-#
+         before-sleep 'swaylock-blur -- -f'
+
+# Inhibit Idle if a window is fullscreen 
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -229,14 +234,23 @@ default_floating_border pixel 2
 #
 # Lock the screen:
 #
-bindsym Ctrl+Alt+l exec 'swaylock -f -c 2e3440'
+bindsym Ctrl+Alt+l exec 'swaylock-blur -- -f'
 
 #
 # Screenshots:
 #
 bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
 
+#
+# Gaps:
+#
+
 gaps outer 16
 gaps inner 8
+
+#
+# Notifications:
+#
+exec mako
 
 include /etc/sway/config.d/*
