@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# Pull branch
+git pull
+
 ##### .config stuf ####
 # Alacritty
 cp -r ~/.config/alacritty .config/
@@ -21,3 +24,8 @@ cp ~/.vimrc .
 cp ~/.zpreztorc .
 cp ~/.zshrc .
 cp ~/.zprofile .
+
+# Commit and push
+git add -A
+git commit -m "Update files $(date +%Y.%m.%d-%H:%M:%S)"
+git push
