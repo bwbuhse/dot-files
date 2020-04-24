@@ -63,7 +63,8 @@
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "interval": 30
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
