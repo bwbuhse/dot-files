@@ -20,7 +20,7 @@ window#waybar {
     background: #4c566a;
 }
 
-#memory, #network, #mode{
+#custom-media, #memory, #network, #mode{
     padding: 0 8px;
     margin: 0 3px;
 }

@@ -4,7 +4,8 @@
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    /* "modules-left": ["sway/workspaces", "sway/mode", "custom/media"], */
+    "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     "modules-right": ["pulseaudio", "network", "backlight", "cpu", "temperature", "memory", "battery", "clock", "tray"],
     "sway/mode": {
@@ -20,11 +21,11 @@
         "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage:2}% ",
         "tooltip": false
     },
     "memory": {
-        "format": "{}% "
+        "format": "{:2}% "
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -92,7 +93,7 @@
             "default": "🎜"
         },
         "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        //"exec": "$HOME/.config/waybar/mediaplayer.py --player spotifyd 2> /dev/null" // Filter player based on name
+        //"exec": "$HOME/.config/waybar/mediaplayer.py 2> $HOME/.config/waybar/asdf" // Script in resources folder
+        "exec": "$HOME/.config/waybar/mediaplayer.py --player spotifyd 2> /dev/null" // Filter player based on name
     }
 }
