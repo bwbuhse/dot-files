@@ -76,7 +76,7 @@ fi
 # my aliases #
 ##############
 
-alias ll='ls -lph'
+alias ll='exa -l'
 
 alias kill-zoom='pkill -9 -f zoom'
 
