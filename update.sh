@@ -5,25 +5,25 @@ git pull
 
 ##### .config stuf ####
 # Alacritty
-cp -r ~/.config/alacritty .config/
+cp -r /home/ben/.config/alacritty .config/
 
 # sway
-cp -r ~/.config/sway .config/
+cp -r /home/ben/.config/sway .config/
 
 # waybar
-cp -r ~/.config/waybar .config/
+cp -r /home/ben/.config/waybar .config/
 
 #### ~ stuff  ####
 # tmux
-cp ~/.tmux.conf .
+cp /home/ben/.tmux.conf .
 
 # vim
-cp ~/.vimrc .
+cp /home/ben/.vimrc .
 
 # zsh stuff
-cp ~/.zpreztorc .
-cp ~/.zshrc .
-cp ~/.zprofile .
+cp /home/ben/.zpreztorc .
+cp /home/ben/.zshrc .
+cp /home/ben/.zprofile .
 
 # Commit and push
 git add -A

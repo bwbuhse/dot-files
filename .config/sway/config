@@ -36,8 +36,8 @@ output DP-2 bg /home/ben/Pictures/mountain_wallpaper.png fill
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock-blur -- -f ' \
-         timeout 600 'swaymsg "output * dpms off"' \
+         timeout 600 'swaylock-blur -- -f ' \
+         timeout 900 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock-blur -- -f'
 
