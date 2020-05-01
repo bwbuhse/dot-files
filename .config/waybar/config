@@ -7,7 +7,7 @@
     /* "modules-left": ["sway/workspaces", "sway/mode", "custom/media"], */
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "backlight", "cpu", "temperature", "memory", "battery", "clock", "tray"],
+    "modules-right": ["pulseaudio", "network", "temperature", "memory", "battery", "clock", "tray"],
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
