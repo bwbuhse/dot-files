@@ -72,6 +72,7 @@ fi
 
 # LIBA VA DRIVER
 export LIBVA_DRIVER_NAME="iHD"
+export MESA_LOADER_DRIVER_OVERRIDE=i965
 
 # # Run Sway
 # if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then

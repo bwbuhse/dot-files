@@ -91,4 +91,7 @@ let g:fzf_preview_window = 'right:60%'
 " Enable rustfmt on buffer same
 let g:rustfmt_autosave = 1
 
+" Highlight active line number
+let g:nord_cursor_line_number_background = 1
+
 set nocscopeverbose

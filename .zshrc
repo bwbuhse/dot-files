@@ -78,6 +78,7 @@ fi
 
 alias ll='exa -l'
 alias exa='exa -l'
+alias cat='bat'
 
 alias kill-zoom='pkill -9 -f zoom'
 
