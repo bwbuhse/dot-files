@@ -19,8 +19,7 @@ set $term alacritty
 # on the original workspace that the command was run on.
 # set $menu --no-startup-id qdbus org.kde.krunner /App display | xargs swaymsg exec --
 # set $menu wofi --show=run,drun,dmenu| xargs swaymsg exec --
-set $menu j4-dmenu-desktop --dmenu='bemenu -b -i --tb "#2e3440" --tf "#ffffff" --fb "#2e3440" --nb "#2e3440" --nf "#ffffff" --hb "#4c566a" --hf "#ffffff" --scb "#2e3440" --sb "#2e3440" --fn "pango:DejaVu Sans Mono 12"' --term='konsole' | xargs swaymsg exec --
-
+set $menu j4-dmenu-desktop --dmenu='bemenu -b -i --tb "#2e3440" --tf "#ffffff" --fb "#2e3440" --nb "#2e3440" --nf "#ffffff" --hb "#4c566a" --hf "#ffffff" --scb "#2e3440" --sb "#2e3440" --fn "pango:DejaVu Sans Mono 12"' --term='st' | xargs swaymsg exec --
 
 ### Output configuration
 #

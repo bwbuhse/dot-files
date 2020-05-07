@@ -96,5 +96,14 @@
         "escape": true,
         //"exec": "$HOME/.config/waybar/mediaplayer.py 2> $HOME/.config/waybar/asdf" // Script in resources folder
         "exec": "$HOME/.config/waybar/mediaplayer.py --player spotifyd 2> /dev/null" // Filter player based on name
+    },
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click-right",
+        "interval": 1800,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/weather.sh",
+        "exec-if": "ping wttr.in -c1"
     }
 }
