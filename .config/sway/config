@@ -222,6 +222,8 @@ bar {
     position top
 
     swaybar_command waybar
+
+    output *
 }
 
 #
@@ -233,7 +235,7 @@ default_floating_border pixel 2
 #
 # Lock the screen:
 #
-bindsym Ctrl+Alt+l exec 'swaylock-blur -- -f'
+bindsym Ctrl+Alt+l exec 'systemctl suspend'
 
 #
 # Screenshots:
