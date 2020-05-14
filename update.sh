@@ -22,6 +22,7 @@ cp /home/ben/.vimrc .
 
 # zsh stuff
 cp /home/ben/.zpreztorc .
+cp -r /home/ben/.zprecto .
 cp /home/ben/.zshrc .
 cp /home/ben/.zprofile .
 
