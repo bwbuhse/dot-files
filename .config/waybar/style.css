@@ -14,10 +14,12 @@ window#waybar {
 #workspaces button {
     padding: 0 5px;
     background: transparent;
+    color: white;
 }
 
 #workspaces button.focused {
     background: #4c566a;
+    color: white;
 }
 
 #custom-media, #memory, #network, #mode{

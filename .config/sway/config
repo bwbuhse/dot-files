@@ -25,7 +25,7 @@ set $menu j4-dmenu-desktop --dmenu='bemenu -m all -b -i --tb "#2e3440" --tf "#ff
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output eDP-1 bg /home/ben/Pictures/mountain_wallpaper_right.png fill
-output DP-2 bg /home/ben/Pictures/mountain_wallpaper.png fill
+# output DP-2 bg /home/ben/Pictures/mountain_wallpaper.png fill
 #
 # Example configuration:
 #
