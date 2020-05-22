@@ -96,7 +96,7 @@ alias pac=yay  # For convenience
 alias pacmatic='sudo --preserve-env=pacman_program /usr/bin/pacmatic'
 
 # Downgrade permissions as AUR helpers expect to be run as a non-root user. $UID is read-only in {ba,z}sh.
-# alias yay='pacman_program="sudo -u #$UID /usr/bin/yay --pacman powerpill" pacmatic'
+alias yay='pacman_program="sudo -u #$UID /usr/bin/yay --pacman powerpill" pacmatic'
 
 alias vi='vim'
 
@@ -112,8 +112,8 @@ export PINTOS=/home/ben/projects/os-sp20-team-bumo
 export PATH=$PATH:$PINTOS/utils:/home/ben/.cargo/bin
 
 # Set VA-API driver
-export LIBVA_DRIVER_NAME='iHD'
-export VDPAU_DRIVER='va_gl'
+export LIBVA_DRIVER_NAME='vdpau'
+export VDPAU_DRIVER='nvidia'
 
 # Run presto
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"

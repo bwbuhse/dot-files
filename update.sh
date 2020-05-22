@@ -25,6 +25,9 @@ cp /home/ben/.zpreztorc .
 cp /home/ben/.zshrc .
 cp /home/ben/.zprofile .
 
+# neovim stuff
+cp -r /home/ben/.config/nvim .config/
+
 # Commit and push
 git add -A
 git commit -m "Update files $(date +%Y.%m.%d-%H:%M:%S)"
