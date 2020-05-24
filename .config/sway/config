@@ -25,7 +25,6 @@ set $menu j4-dmenu-desktop --dmenu='bemenu -m all -b -i --tb "#2e3440" --tf "#ff
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output eDP-1 bg /home/ben/Pictures/mountain_wallpaper_right.png fill
-output DP-1 bg /home/ben/Pictures/mountain_wallpaper_right.png fill
 # output DP-2 bg /home/ben/Pictures/mountain_wallpaper.png fill
 #
 # Example configuration:
@@ -54,18 +53,18 @@ for_window [app_id="^.*"] inhibit_idle fullscreen
 # Read `man 5 sway-input` for more information about this section.
 
 # Touchpad Settings
-# input "1739:0:Synaptics_TM3289-021" {
-#   dwt enabled
-#   tap disable
-#   natural_scroll enabled
-#   middle_emulation enabled
-#   click_method clickfinger
-# }
+input "1739:0:Synaptics_TM3289-021" {
+  dwt enabled
+  tap disable
+  natural_scroll enabled
+  middle_emulation enabled
+  click_method clickfinger
+}
 
 # Add compose key to keyboard
-# input "1:1:AT_Translated_Set_2_keyboard" {
-#   xkb_options compose:rctrl
-# }
+input "1:1:AT_Translated_Set_2_keyboard" {
+  xkb_options compose:rctrl
+}
 
 ### Key bindings
 #
@@ -254,5 +253,10 @@ gaps inner 8
 # Notifications:
 #
 exec mako
+
+#
+# Font:
+#
+font pango:DejaVu Sans Mono 8
 
 include /etc/sway/config.d/*
