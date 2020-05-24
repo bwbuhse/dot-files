@@ -55,13 +55,13 @@ endif
 " Use clang-format when saving
 function! Formatonsave()
   let l:formatdiff = 1
-  py3f ~/opt/clang-format.py
+  py3f /home/ben/.config/nvim/clang-format.py
 endfunction
 autocmd BufWritePre *.h,*.c,*.cpp call Formatonsave()
 
 " C-k to use clang-format
-map <C-K> :py3f ~/opt/clang-format.py<cr>
-imap <C-K> <c-o>:py3f ~/opt/clang-format.py<cr>
+map <C-K> :py3f /home/ben/.config/nvim/clang-format.py<cr>
+imap <C-K> <c-o>:py3f /home/ben/.config/nvim/clang-format.py<cr>
 
 " Make comments brighter ?
 " hi Comment ctermfg=LightBlue
