@@ -26,7 +26,7 @@ cp /home/ben/.zshrc .
 cp /home/ben/.zprofile .
 
 # neovim stuff
-cp -r /home/ben/.config/nvim .config/
+cp /home/ben/.config/nvim/init.vim .config/nvim/
 
 # Commit and push
 git add -A
