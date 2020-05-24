@@ -25,6 +25,7 @@ call plug#end()
 
 " general stuff
 set number
+set relativenumber
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
