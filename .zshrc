@@ -102,7 +102,6 @@ alias vi='nvim'
 
 alias vim='nvim'
 
-
 ##############
 # my exports #
 ##############
@@ -114,8 +113,11 @@ export PINTOS=/home/ben/projects/os-sp20-team-bumo
 export PATH=$PATH:$PINTOS/utils:/home/ben/.cargo/bin
 
 # Set VA-API driver
-export LIBVA_DRIVER_NAME='iHD'
-export VDPAU_DRIVER='va_gl'
+export LIBVA_DRIVER_NAME='vdpau'
+export VDPAU_DRIVER='nvidia'
 
 # Run presto
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+
+# set alacritty as my default terminal
+export TERMINAL='alacritty'
