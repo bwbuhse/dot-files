@@ -16,6 +16,9 @@ cp -r /home/ben/.config/waybar .config/
 # i3 and Polybar
 cp -r ~/.config/polybar ~/.config/i3 .config    
 
+# picom
+cp -r ~/.config/picom .config
+
 #### ~ stuff  ####
 # tmux
 cp /home/ben/.tmux.conf .
