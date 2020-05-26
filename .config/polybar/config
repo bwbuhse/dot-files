@@ -104,9 +104,9 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = %{F#colors.primary}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
+label-unmounted-foreground = ${colors.foreground}
 
 [module/bspwm]
 type = internal/bspwm
@@ -261,7 +261,7 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =  "%c"
+date = " %c"
 ;date-alt = " %Y-%m-%d"
 
 ;time = %H:%M
@@ -281,7 +281,7 @@ label-volume = VOL %percentage%%
 label-volume-foreground = ${root.foreground}
 
 label-muted = 🔇 muted
-label-muted-foreground = #666
+label-muted-foreground = ${colors.alert}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
