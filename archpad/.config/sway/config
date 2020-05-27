@@ -229,8 +229,8 @@ bar {
 #
 # Layout stuff:
 #
-default_border pixel 2
-default_floating_border pixel 2
+default_border none
+default_floating_border none
 
 #
 # Lock the screen:
@@ -246,8 +246,9 @@ bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
 # Gaps:
 #
 
-gaps outer 16
+gaps outer 8
 gaps inner 8
+smart_gaps on
 
 #
 # Notifications:
