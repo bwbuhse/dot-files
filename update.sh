@@ -28,28 +28,28 @@ if [ -e /home/ben/.config/nvim ]; then
 fi
 
 # Polybar
-if [-e /home/ben/.config/polybar ]; then
+if [ -e /home/ben/.config/polybar ]; then
   cp -r ~/.config/polybar $HOST/.config    
 fi
 
 # i3
-if [-e /home/ben/.config/i3 ]; then
+if [ -e /home/ben/.config/i3 ]; then
   cp -r ~/.config/i3 $HOST/.config
 fi
 
 # picom
-if [-e /home/ben/.config/picom ]; then
+if [ -e /home/ben/.config/picom ]; then
   cp -r ~/.config/picom $HOST/.config
 fi
 
 #### ~ stuff  ####
 # tmux
-if [-e /home/ben/.tmux.conf ]; then
+if [ -e /home/ben/.tmux.conf ]; then
   cp /home/ben/.tmux.conf $HOST/.
 fi
 
 # zsh stuff
-if [-e /home/ben/.zshrc ]; then
+if [ -e /home/ben/.zshrc ]; then
   cp /home/ben/.zpreztorc $HOST/.
   cp /home/ben/.zshrc $HOST/.
   cp /home/ben/.zprofile $HOST.
@@ -61,7 +61,7 @@ git commit -m "Update files for $HOST $(date +%Y.%m.%d-%H:%M:%S)"
 git push
 
 # Update prezto too!
-if [-e /home/ben/.zprezto ]; then
+if [ -e /home/ben/.zprezto ]; then
   (
     cd ~/.zpreztorc
     git pull
