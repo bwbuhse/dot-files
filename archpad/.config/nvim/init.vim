@@ -21,6 +21,8 @@ Plug 'rust-lang/rust.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'tjdevries/coc-zsh'
+
 call plug#end()
 
 " general stuff
