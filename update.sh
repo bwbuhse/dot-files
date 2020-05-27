@@ -52,7 +52,7 @@ fi
 if [ -e /home/ben/.zshrc ]; then
   cp /home/ben/.zpreztorc $HOST/.
   cp /home/ben/.zshrc $HOST/.
-  cp /home/ben/.zprofile $HOST.
+  cp /home/ben/.zprofile $HOST/.
 fi
 
 # Commit and push
