@@ -9,7 +9,7 @@ fi
 # Pull branch
 git pull
 
-##### .config stuf ####
+##### .config stuff ####
 # Alacritty
 if [ -e /home/ben/.config/alacritty ]; then
   cp -r /home/ben/.config/alacritty $HOST/.config/
@@ -27,7 +27,9 @@ fi
 
 # neovim stuff
 if [ -e /home/ben/.config/nvim ]; then
-  cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
+  if [ ! -e $HOST/.config/nvim ]; then
+    cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
+  fi
 fi
 
 # coc.nvim
