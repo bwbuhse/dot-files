@@ -33,7 +33,7 @@ if [ -e /home/ben/.config/nvim ]; then
 fi
 
 # coc.nvim
-if [-e /home/ben/.config/coc ]; then
+if [ -e /home/ben/.config/coc ]; then
   cp -r /home/ben/.config/coc $HOST/.config/coc/
 fi
 
