@@ -2,6 +2,9 @@
 
 # Used to determine which directory to copy into
 HOST=$(uname -n)
+if [ ! -e $HOST ]; then
+  mkdir $HOST
+fi
 
 # Pull branch
 git pull
