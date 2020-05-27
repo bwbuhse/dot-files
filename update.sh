@@ -63,7 +63,7 @@ git push
 # Update prezto too!
 if [ -e /home/ben/.zprezto ]; then
   (
-    cd ~/.zpreztorc
+    cd ~/.zprezto
     git pull
     git add -u
     git commit -m "Update files from $HOST $(date +%Y.%m.%d-%H:%M:%S)"
