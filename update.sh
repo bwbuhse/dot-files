@@ -27,6 +27,11 @@ if [ -e /home/ben/.config/nvim ]; then
   cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
 fi
 
+# coc.nvim
+if [-e /home/ben/.config/coc ]; then
+  cp -r /home/ben/.config/coc $HOST/.config/coc/
+fi
+
 # Polybar
 if [ -e /home/ben/.config/polybar ]; then
   cp -r ~/.config/polybar $HOST/.config    
