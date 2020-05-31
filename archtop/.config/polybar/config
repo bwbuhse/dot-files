@@ -103,8 +103,9 @@ type = internal/fs
 interval = 25
 
 mount-0 = /
+;mount-1 = /mnt/shared-hdd
 
-label-mounted = %{F#colors.primary}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = %{F#colors.primary}%mountpoint%%{F-}: %used% of %free%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground}
 
@@ -226,7 +227,7 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 ;format-connected-underline = #9f78e1
-label-connected = %essid%
+label-connected = %local_ip6%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>

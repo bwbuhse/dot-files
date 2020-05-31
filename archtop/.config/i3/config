@@ -216,3 +216,6 @@ exec xset m 0 1
 
 # Launch gnome keyring daemon
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
+
+# Launch geoclue for redshift
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
