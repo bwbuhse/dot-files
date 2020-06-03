@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /home/ben/projects/dot-files/
+
 # Used to determine which directory to copy into
 HOST=$(uname -n)
 if [ -e $HOST ]; then
