@@ -31,8 +31,9 @@ fi
 # neovim stuff
 if [ -e /home/ben/.config/nvim ]; then
   if [ ! -e $HOST/.config/nvim ]; then
-    cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
+    mkdir $HOST/.config/nvim
   fi
+  cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
 fi
 
 # coc.nvim
