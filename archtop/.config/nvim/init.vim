@@ -33,6 +33,7 @@ set encoding=utf-8
 
 syntax on
 
+  " won't work until the colorscheme is installed
 colorscheme nord
 
 if has('cscope')
