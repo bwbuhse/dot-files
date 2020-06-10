@@ -22,12 +22,12 @@ window#waybar {
     color: white;
 }
 
-#custom-media, #memory, #network, #mode{
+#custom-media, #cpu, #network, #mode{
     padding: 0 8px;
     margin: 0 3px;
 }
 
-#backlight, #tray, #cpu, #clock, #battery {
+#backlight, #tray, #memory, #clock, #battery {
     padding: 0 8px 0 0;
     margin: 0 3px 0 0;
 }

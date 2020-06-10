@@ -31,24 +31,6 @@ fif() {
   rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
 }
 
-# Detach from current tmux session and create a new one
-# tmdn() { 
-#   if [[ -v $1 ]]; then 
-#     tmux detach -E "tmux new -A -s '$1'"; 
-#   else
-#     echo 'You need to give a session name';
-#   fi
-# }
-
-# tmda() {
-#   if [[ -v $1 ]]; then 
-#     tmux detach -E "tmux attach -t '$1'"; 
-#   else
-#     echo 'You need to give a session name';
-#   fi
-# }
-
-
 #########################
 # update terminal title #
 #########################
@@ -99,7 +81,6 @@ alias pacmatic='sudo --preserve-env=pacman_program /usr/bin/pacmatic'
 alias yay='pacman_program="sudo -u #$UID /usr/bin/yay --pacman powerpill" pacmatic'
 
 alias vi='nvim'
-
 alias vim='nvim'
 
 
@@ -107,15 +88,12 @@ alias vim='nvim'
 # my exports #
 ##############
 
-# These lines are just for ee461s
-export PINTOS=/home/ben/projects/os-sp20-team-bumo
-
 # For rust stuff ?? 
-export PATH=$PATH:$PINTOS/utils:/home/ben/.cargo/bin
+export PATH=$PATH:/home/ben/.cargo/bin
 
 # Set VA-API driver
 export LIBVA_DRIVER_NAME='iHD'
 export VDPAU_DRIVER='va_gl'
 
-# Run presto
+# Run prezto
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
