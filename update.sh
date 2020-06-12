@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DIRECOTRY=`dirname $0`
-echo $DIRECTORY
-cd /home/$USER/projects/dot-files/
+DIRECTORY=`dirname $0`
+cd $DIRECTORY
+pwd
 
 # Used to determine which directory to copy into
 HOST=$(uname -n)
