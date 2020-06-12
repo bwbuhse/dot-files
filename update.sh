@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIRECOTRY=`dirname $0`
+echo $DIRECTORY
 cd /home/$USER/projects/dot-files/
 
 # Used to determine which directory to copy into
