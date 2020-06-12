@@ -1,8 +1,16 @@
 #!/bin/bash
 
+# Enable debugging for update.sh
+# Setting to true disables pulling/committing/pushing to the git repo
+DEBUG=false
+
+if [ $DEBUG = true ]; then
+  echo 'Running in DEBUG mode'
+  echo 'Any changes to dot files will not be commited or pushed to the git repo'
+fi
+
 DIRECTORY=`dirname $0`
 cd $DIRECTORY
-pwd
 
 # Used to determine which directory to copy into
 HOST=$(uname -n)
@@ -12,7 +20,9 @@ fi
 mkdir $HOST
 
 # Pull branch
-git pull
+if [ $DEBUG = false ]; then
+  git pull
+fi
 
 ##### .config stuff ####
 # Alacritty
@@ -72,17 +82,19 @@ if [ -e /home/$USER/.zshrc ]; then
 fi
 
 # Commit and push
-git add -A
-git commit -m "Update files for $HOST $(date +%Y.%m.%d-%H:%M:%S)"
-git push
+if [ $DEBUG = false ]; then
+  git add -A
+  git commit -m "Update files for $HOST $(date +%Y.%m.%d-%H:%M:%S)"
+  git push
 
-# Update prezto too!
-if [ -e /home/$USER/.zprezto ]; then
-  (
-    cd ~/.zprezto
-    git pull
-    git add -u
-    git commit -m "Update files from $HOST $(date +%Y.%m.%d-%H:%M:%S)"
-    git push
-  )
+  # Update prezto too!
+  if [ -e /home/$USER/.zprezto ]; then
+    (
+      cd ~/.zprezto
+      git pull
+      git add -u
+      git commit -m "Update files from $HOST $(date +%Y.%m.%d-%H:%M:%S)"
+      git push
+    )
+  fi
 fi
