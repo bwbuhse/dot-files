@@ -34,7 +34,7 @@ def push(origin: git.Remote):
 
 def add(repo: git.Repo):
     if not DEBUG:
-        repo.index.add('*')
+        repo.git.add('-A')
 
 
 def commit(repo: git.Repo):
