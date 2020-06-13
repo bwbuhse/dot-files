@@ -1,6 +1,16 @@
 #!/bin/bash
 
-cd /home/ben/projects/dot-files/
+# Enable debugging for update.sh
+# Setting to true disables pulling/committing/pushing to the git repo
+DEBUG=false
+
+if [ $DEBUG = true ]; then
+  echo 'Running in DEBUG mode'
+  echo 'Any changes to dot files will not be commited or pushed to the git repo'
+fi
+
+DIRECTORY=`dirname $0`
+cd $DIRECTORY
 
 # Used to determine which directory to copy into
 HOST=$(uname -n)
@@ -10,77 +20,81 @@ fi
 mkdir $HOST
 
 # Pull branch
-git pull
+if [ $DEBUG = false ]; then
+  git pull
+fi
 
 ##### .config stuff ####
 # Alacritty
-if [ -e /home/ben/.config/alacritty ]; then
-  cp -r /home/ben/.config/alacritty $HOST/.config/
+if [ -e /home/$USER/.config/alacritty ]; then
+  cp -r /home/$USER/.config/alacritty $HOST/.config/
 fi
 
 # sway
-if [ -e /home/ben/.config/sway ]; then
-    cp -r /home/ben/.config/sway $HOST/.config/
+if [ -e /home/$USER/.config/sway ]; then
+    cp -r /home/$USER/.config/sway $HOST/.config/
 fi
 
 # waybar
-if [ -e /home/ben/.config/waybar ]; then
-  cp -r /home/ben/.config/waybar $HOST/.config/
+if [ -e /home/$USER/.config/waybar ]; then
+  cp -r /home/$USER/.config/waybar $HOST/.config/
 fi
 
 # neovim stuff
-if [ -e /home/ben/.config/nvim ]; then
+if [ -e /home/$USER/.config/nvim ]; then
   if [ ! -e $HOST/.config/nvim ]; then
     mkdir $HOST/.config/nvim
   fi
-  cp /home/ben/.config/nvim/init.vim $HOST/.config/nvim/
+  cp /home/$USER/.config/nvim/init.vim $HOST/.config/nvim/
 fi
 
 # coc.nvim
-if [ -e /home/ben/.config/coc ]; then
-  cp -r /home/ben/.config/coc $HOST/.config/coc/
+if [ -e /home/$USER/.config/coc ]; then
+  cp -r /home/$USER/.config/coc $HOST/.config/coc/
 fi
 
 # Polybar
-if [ -e /home/ben/.config/polybar ]; then
+if [ -e /home/$USER/.config/polybar ]; then
   cp -r ~/.config/polybar $HOST/.config    
 fi
 
 # i3
-if [ -e /home/ben/.config/i3 ]; then
+if [ -e /home/$USER/.config/i3 ]; then
   cp -r ~/.config/i3 $HOST/.config
 fi
 
 # picom
-if [ -e /home/ben/.config/picom ]; then
+if [ -e /home/$USER/.config/picom ]; then
   cp -r ~/.config/picom $HOST/.config
 fi
 
 #### ~ stuff  ####
 # tmux
-if [ -e /home/ben/.tmux.conf ]; then
-  cp /home/ben/.tmux.conf $HOST/.
+if [ -e /home/$USER/.tmux.conf ]; then
+  cp /home/$USER/.tmux.conf $HOST/.
 fi
 
 # zsh stuff
-if [ -e /home/ben/.zshrc ]; then
-  cp /home/ben/.zpreztorc $HOST/.
-  cp /home/ben/.zshrc $HOST/.
-  cp /home/ben/.zprofile $HOST/.
+if [ -e /home/$USER/.zshrc ]; then
+  cp /home/$USER/.zpreztorc $HOST/.
+  cp /home/$USER/.zshrc $HOST/.
+  cp /home/$USER/.zprofile $HOST/.
 fi
 
 # Commit and push
-git add -A
-git commit -m "Update files for $HOST $(date +%Y.%m.%d-%H:%M:%S)"
-git push
+if [ $DEBUG = false ]; then
+  git add -A
+  git commit -m "Update files for $HOST $(date +%Y.%m.%d-%H:%M:%S)"
+  git push
 
-# Update prezto too!
-if [ -e /home/ben/.zprezto ]; then
-  (
-    cd ~/.zprezto
-    git pull
-    git add -u
-    git commit -m "Update files from $HOST $(date +%Y.%m.%d-%H:%M:%S)"
-    git push
-  )
+  # Update prezto too!
+  if [ -e /home/$USER/.zprezto ]; then
+    (
+      cd ~/.zprezto
+      git pull
+      git add -u
+      git commit -m "Update files from $HOST $(date +%Y.%m.%d-%H:%M:%S)"
+      git push
+    )
+  fi
 fi
