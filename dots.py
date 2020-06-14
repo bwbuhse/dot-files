@@ -13,6 +13,11 @@ import datetime
 # Used for updated this script without committing changes everytime that the script is run
 NO_GIT = False
 
+# Set to True while updating this script
+# This variable won't let you run the script without passing a commit message but still lets you push the changes it copies
+# This can be useful for making sure that the code still works but with a useful commit message about the changes
+EDITING_SCRIPT = True
+
 # Directories to copy files from/to
 HOSTNAME = socket.gethostname()
 REPO_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -62,6 +67,10 @@ def main(argv):
     if NO_GIT:
         print('Running in NO_GIT mode')
         print('Any changes to dot files will not be commited or pushed to the git repo\n')
+    elif EDITING_SCRIPT and len(argv) == 1:
+        print('Please enter a commit message as an argument while using EDITING_SCRIPT mode')
+        print('Exiting now...')
+        return
 
     os.chdir(REPO_DIR_PATH)
     repo = git.Repo(os.getcwd())
@@ -143,7 +152,7 @@ def main(argv):
 
     # Commit, add, push all changes
     add(repo)
-    if argv[1] != None:
+    if len(argv) > 1:
         commit(repo, argv[1])
     else:
         commit(repo)
