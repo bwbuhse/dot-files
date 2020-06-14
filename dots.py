@@ -19,7 +19,11 @@ HOSTNAME_DIR = pathlib.Path(HOSTNAME)
 HOSTNAME_CONFIG_DIR = HOSTNAME_DIR / '.config'
 REPO_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 HOME = pathlib.Path.home()
-DOT_CONFIG = HOME / '.config'
+HOME_DOT_CONFIG = HOME / '.config'
+
+# Dictionaries of dot file(s directories) to copy into the repo
+
+
 
 
 def pull(origin: git.Remote):
@@ -62,22 +66,22 @@ def main(argv):
 
     # Copy dot-files that are in ~/.config
     # Alacritty
-    alacritty_dir_path = DOT_CONFIG / 'alacritty'
+    alacritty_dir_path = HOME_DOT_CONFIG / 'alacritty'
     if alacritty_dir_path.exists():
         shutil.copytree(alacritty_dir_path, HOSTNAME_CONFIG_DIR / 'alacritty')
 
     # sway
-    sway_dir_path = DOT_CONFIG / 'sway'
+    sway_dir_path = HOME_DOT_CONFIG / 'sway'
     if sway_dir_path.exists():
         shutil.copytree(sway_dir_path, HOSTNAME_CONFIG_DIR / 'sway')
 
     # waybar
-    waybar_dir_path = DOT_CONFIG / 'waybar'
+    waybar_dir_path = HOME_DOT_CONFIG / 'waybar'
     if waybar_dir_path.exists():
         shutil.copytree(waybar_dir_path, HOSTNAME_CONFIG_DIR / 'waybar')
 
     # neovim
-    neovim_dir_path = DOT_CONFIG / 'nvim'
+    neovim_dir_path = HOME_DOT_CONFIG / 'nvim'
     neovim_repo_dir_path = HOSTNAME_CONFIG_DIR / 'nvim'
     if neovim_dir_path.exists():
         if not neovim_repo_dir_path.exists():
@@ -91,17 +95,17 @@ def main(argv):
             shutil.copy(coc_dir_path, neovim_repo_dir_path)
 
     # i3
-    i3_dir_path = DOT_CONFIG / 'i3'
+    i3_dir_path = HOME_DOT_CONFIG / 'i3'
     if i3_dir_path.exists():
         shutil.copytree(i3_dir_path, HOSTNAME_CONFIG_DIR / 'i3')
 
     # Polybar
-    polybar_dir_path = DOT_CONFIG / 'polybar'
+    polybar_dir_path = HOME_DOT_CONFIG / 'polybar'
     if polybar_dir_path.exists():
         shutil.copytree(polybar_dir_path, HOSTNAME_CONFIG_DIR / 'polybar')
 
     # picom
-    picom_dir_path = DOT_CONFIG / 'picom'
+    picom_dir_path = HOME_DOT_CONFIG / 'picom'
     if picom_dir_path.exists():
         shutil.copytree(picom_dir_path, HOSTNAME_CONFIG_DIR / 'picom')
 
