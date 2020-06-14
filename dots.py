@@ -8,47 +8,59 @@ import shutil
 import pathlib
 import datetime
 
-# Set to True to enable debug mode
+# Set to True to enable 'no git' mode
 # While True, all pulling/committing/pushing to the git repo (by the script) is disabled
 # Used for updated this script without committing changes everytime that the script is run
-DEBUG = False
+NO_GIT = False
 
-# Directories needed by the script
+# Directories to copy files from/to
 HOSTNAME = socket.gethostname()
-HOSTNAME_DIR = pathlib.Path(HOSTNAME)
-HOSTNAME_CONFIG_DIR = HOSTNAME_DIR / '.config'
 REPO_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-HOME = pathlib.Path.home()
-HOME_DOT_CONFIG = HOME / '.config'
+REPO_HOSTNAME_PATH = pathlib.Path(HOSTNAME)
+REPO_HOSTNAME_CONFIG_PATH = REPO_HOSTNAME_PATH / '.config'
+HOME_PATH = pathlib.Path.home()
+HOME_DOT_CONFIG_PATH = HOME_PATH / '.config'
 
-# Dictionaries of dot file(s directories) to copy into the repo
-
-
+# Dictionaries used for matching directories
+PATH_PAIRS = {HOME_PATH: REPO_HOSTNAME_PATH,
+              HOME_DOT_CONFIG_PATH: REPO_HOSTNAME_CONFIG_PATH}
 
 
 def pull(origin: git.Remote):
-    if not DEBUG:
+    if not NO_GIT:
         origin.pull()
 
 
 def push(origin: git.Remote):
-    if not DEBUG:
+    if not NO_GIT:
         origin.push()
 
 
 def add(repo: git.Repo):
-    if not DEBUG:
+    if not NO_GIT:
         repo.git.add('-A')
 
 
-def commit(repo: git.Repo):
-    if not DEBUG:
-        repo.index.commit('Update files for ' + HOSTNAME + ' ' + str(datetime.datetime.now()))
+def commit(repo: git.Repo, message: str = None):
+    if not NO_GIT:
+        if str != None:
+            repo.index.commit(message)
+        else:
+            repo.index.commit('Update files for ' + HOSTNAME +
+                              ' ' + str(datetime.datetime.now()))
 
 
 def main(argv):
-    if DEBUG:
-        print('Running in DEBUG mode')
+    '''
+    Pulls any changes from the git repo.
+    Deletes the directory in the repo for the current host then re-creates it.
+    Copies all specified files to the directory for the host.
+    Adds, commits, then pushes all the changes.
+
+    If an argument is passed, it will replace the default commit message.
+    '''
+    if NO_GIT:
+        print('Running in NO_GIT mode')
         print('Any changes to dot files will not be commited or pushed to the git repo\n')
 
     os.chdir(REPO_DIR_PATH)
@@ -61,28 +73,29 @@ def main(argv):
     # We remove the previous version so files that are no-longer there are removed
     if os.path.exists(HOSTNAME) and os.path.isdir(HOSTNAME):
         shutil.rmtree(HOSTNAME)
-    HOSTNAME_DIR.mkdir()
-    HOSTNAME_CONFIG_DIR.mkdir()
+    REPO_HOSTNAME_PATH.mkdir()
+    REPO_HOSTNAME_CONFIG_PATH.mkdir()
 
     # Copy dot-files that are in ~/.config
     # Alacritty
-    alacritty_dir_path = HOME_DOT_CONFIG / 'alacritty'
+    alacritty_dir_path = HOME_DOT_CONFIG_PATH / 'alacritty'
     if alacritty_dir_path.exists():
-        shutil.copytree(alacritty_dir_path, HOSTNAME_CONFIG_DIR / 'alacritty')
+        shutil.copytree(alacritty_dir_path,
+                        REPO_HOSTNAME_CONFIG_PATH / 'alacritty')
 
     # sway
-    sway_dir_path = HOME_DOT_CONFIG / 'sway'
+    sway_dir_path = HOME_DOT_CONFIG_PATH / 'sway'
     if sway_dir_path.exists():
-        shutil.copytree(sway_dir_path, HOSTNAME_CONFIG_DIR / 'sway')
+        shutil.copytree(sway_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'sway')
 
     # waybar
-    waybar_dir_path = HOME_DOT_CONFIG / 'waybar'
+    waybar_dir_path = HOME_DOT_CONFIG_PATH / 'waybar'
     if waybar_dir_path.exists():
-        shutil.copytree(waybar_dir_path, HOSTNAME_CONFIG_DIR / 'waybar')
+        shutil.copytree(waybar_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'waybar')
 
     # neovim
-    neovim_dir_path = HOME_DOT_CONFIG / 'nvim'
-    neovim_repo_dir_path = HOSTNAME_CONFIG_DIR / 'nvim'
+    neovim_dir_path = HOME_DOT_CONFIG_PATH / 'nvim'
+    neovim_repo_dir_path = REPO_HOSTNAME_CONFIG_PATH / 'nvim'
     if neovim_dir_path.exists():
         if not neovim_repo_dir_path.exists():
             neovim_repo_dir_path.mkdir()
@@ -95,41 +108,45 @@ def main(argv):
             shutil.copy(coc_dir_path, neovim_repo_dir_path)
 
     # i3
-    i3_dir_path = HOME_DOT_CONFIG / 'i3'
+    i3_dir_path = HOME_DOT_CONFIG_PATH / 'i3'
     if i3_dir_path.exists():
-        shutil.copytree(i3_dir_path, HOSTNAME_CONFIG_DIR / 'i3')
+        shutil.copytree(i3_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'i3')
 
     # Polybar
-    polybar_dir_path = HOME_DOT_CONFIG / 'polybar'
+    polybar_dir_path = HOME_DOT_CONFIG_PATH / 'polybar'
     if polybar_dir_path.exists():
-        shutil.copytree(polybar_dir_path, HOSTNAME_CONFIG_DIR / 'polybar')
+        shutil.copytree(polybar_dir_path,
+                        REPO_HOSTNAME_CONFIG_PATH / 'polybar')
 
     # picom
-    picom_dir_path = HOME_DOT_CONFIG / 'picom'
+    picom_dir_path = HOME_DOT_CONFIG_PATH / 'picom'
     if picom_dir_path.exists():
-        shutil.copytree(picom_dir_path, HOSTNAME_CONFIG_DIR / 'picom')
+        shutil.copytree(picom_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'picom')
 
     # Copy dot-files that are directly in ~/
     # tmux
-    tmux_path = HOME / '.tmux.conf'
+    tmux_path = HOME_PATH / '.tmux.conf'
     if tmux_path.exists():
-        shutil.copy(tmux_path, HOSTNAME_DIR / '.tmux.conf')
+        shutil.copy(tmux_path, REPO_HOSTNAME_PATH / '.tmux.conf')
 
     # zsh
-    zshrc_path = HOME / '.zshrc'
+    zshrc_path = HOME_PATH / '.zshrc'
     if zshrc_path.exists():
-        shutil.copy(zshrc_path, HOSTNAME_DIR / '.zshrc')
+        shutil.copy(zshrc_path, REPO_HOSTNAME_PATH / '.zshrc')
         # Just assuming zprofile exists if zshrc does
-        shutil.copy(HOME / '.zprofile', HOSTNAME_DIR / '.zprofile')
+        shutil.copy(HOME_PATH / '.zprofile', REPO_HOSTNAME_PATH / '.zprofile')
 
     # zpreztorc
-    zpreztorc_path = HOME / '.zpreztorc'
+    zpreztorc_path = HOME_PATH / '.zpreztorc'
     if zpreztorc_path.exists():
-        shutil.copy(zpreztorc_path, HOSTNAME_DIR / '.zpreztorc')
+        shutil.copy(zpreztorc_path, REPO_HOSTNAME_PATH / '.zpreztorc')
 
     # Commit, add, push all changes
     add(repo)
-    commit(repo)
+    if argv[1] != None:
+        commit(repo, argv[1])
+    else:
+        commit(repo)
     push(origin)
 
 
