@@ -68,7 +68,8 @@ def main(argv):
         print('Running in NO_GIT mode')
         print('Any changes to dot files will not be commited or pushed to the git repo\n')
     elif EDITING_SCRIPT and len(argv) == 1:
-        print('Please enter a commit message as an argument while using EDITING_SCRIPT mode')
+        print(
+            'Please enter a commit message as an argument while using EDITING_SCRIPT mode')
         print('Exiting now...')
         return
 
