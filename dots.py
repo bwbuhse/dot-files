@@ -16,7 +16,7 @@ NO_GIT = False
 # Set to True while updating this script
 # This variable won't let you run the script without passing a commit message but still lets you push the changes it copies
 # This can be useful for making sure that the code still works but with a useful commit message about the changes
-EDITING_SCRIPT = True
+EDITING_SCRIPT = False
 
 # Directories to copy files from/to
 HOSTNAME = socket.gethostname()
@@ -27,8 +27,14 @@ HOME_PATH = pathlib.Path.home()
 HOME_DOT_CONFIG_PATH = HOME_PATH / '.config'
 
 # Dictionaries used for matching directories
+# Pairs of paths to copy from and their respective paths in the repo to copy to
 PATH_PAIRS = {HOME_PATH: REPO_HOSTNAME_PATH,
               HOME_DOT_CONFIG_PATH: REPO_HOSTNAME_CONFIG_PATH}
+# Files/directories to copy
+FILES_TO_COPY = {HOME_PATH: ['.tmux.conf', '.zshrc', '.zprofile', '.zpreztorc'],
+                 HOME_DOT_CONFIG_PATH: ['nvim/init.vim', 'nvim/coc-settings.json']}
+DIRS_TO_COPY = {HOME_DOT_CONFIG_PATH: [
+    'alacritty', 'sway', 'waybar', 'i3', 'polybar', 'picom']}
 
 
 def pull(origin: git.Remote):
@@ -86,70 +92,24 @@ def main(argv):
     REPO_HOSTNAME_PATH.mkdir()
     REPO_HOSTNAME_CONFIG_PATH.mkdir()
 
-    # Copy dot-files that are in ~/.config
-    # Alacritty
-    alacritty_dir_path = HOME_DOT_CONFIG_PATH / 'alacritty'
-    if alacritty_dir_path.exists():
-        shutil.copytree(alacritty_dir_path,
-                        REPO_HOSTNAME_CONFIG_PATH / 'alacritty')
+    # Copy files/dirs from their original locations into the repo
+    for installed_path, repo_path in PATH_PAIRS.items():
+        dirs_to_copy = DIRS_TO_COPY.get(installed_path, {})
+        files_to_copy = FILES_TO_COPY.get(installed_path, {})
 
-    # sway
-    sway_dir_path = HOME_DOT_CONFIG_PATH / 'sway'
-    if sway_dir_path.exists():
-        shutil.copytree(sway_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'sway')
+        for dir_to_copy in dirs_to_copy:
+            if (installed_path / dir_to_copy).exists():
+                shutil.copytree(installed_path / dir_to_copy,
+                                repo_path / dir_to_copy)
 
-    # waybar
-    waybar_dir_path = HOME_DOT_CONFIG_PATH / 'waybar'
-    if waybar_dir_path.exists():
-        shutil.copytree(waybar_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'waybar')
-
-    # neovim
-    neovim_dir_path = HOME_DOT_CONFIG_PATH / 'nvim'
-    neovim_repo_dir_path = REPO_HOSTNAME_CONFIG_PATH / 'nvim'
-    if neovim_dir_path.exists():
-        if not neovim_repo_dir_path.exists():
-            neovim_repo_dir_path.mkdir()
-        shutil.copy(neovim_dir_path / 'init.vim',
-                    neovim_repo_dir_path / 'init.vim')
-
-        # coc.nvim configuration
-        coc_dir_path = neovim_dir_path / 'coc-settings.json'
-        if coc_dir_path.exists():
-            shutil.copy(coc_dir_path, neovim_repo_dir_path)
-
-    # i3
-    i3_dir_path = HOME_DOT_CONFIG_PATH / 'i3'
-    if i3_dir_path.exists():
-        shutil.copytree(i3_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'i3')
-
-    # Polybar
-    polybar_dir_path = HOME_DOT_CONFIG_PATH / 'polybar'
-    if polybar_dir_path.exists():
-        shutil.copytree(polybar_dir_path,
-                        REPO_HOSTNAME_CONFIG_PATH / 'polybar')
-
-    # picom
-    picom_dir_path = HOME_DOT_CONFIG_PATH / 'picom'
-    if picom_dir_path.exists():
-        shutil.copytree(picom_dir_path, REPO_HOSTNAME_CONFIG_PATH / 'picom')
-
-    # Copy dot-files that are directly in ~/
-    # tmux
-    tmux_path = HOME_PATH / '.tmux.conf'
-    if tmux_path.exists():
-        shutil.copy(tmux_path, REPO_HOSTNAME_PATH / '.tmux.conf')
-
-    # zsh
-    zshrc_path = HOME_PATH / '.zshrc'
-    if zshrc_path.exists():
-        shutil.copy(zshrc_path, REPO_HOSTNAME_PATH / '.zshrc')
-        # Just assuming zprofile exists if zshrc does
-        shutil.copy(HOME_PATH / '.zprofile', REPO_HOSTNAME_PATH / '.zprofile')
-
-    # zpreztorc
-    zpreztorc_path = HOME_PATH / '.zpreztorc'
-    if zpreztorc_path.exists():
-        shutil.copy(zpreztorc_path, REPO_HOSTNAME_PATH / '.zpreztorc')
+        for file_to_copy in files_to_copy:
+            if '/' in file_to_copy:
+                # We need to create any directories that don't exist already
+                inner_dirs = file_to_copy[0:file_to_copy.rfind('/')]
+                os.makedirs(repo_path / inner_dirs, exist_ok=True)
+            if (installed_path / file_to_copy).exists():
+                shutil.copy(installed_path / file_to_copy,
+                            repo_path / file_to_copy)
 
     # Commit, add, push all changes
     add(repo)
