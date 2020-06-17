@@ -20,7 +20,7 @@ EDITING_SCRIPT = True
 
 # Directories to copy files from/to
 HOSTNAME = 'host-' + socket.gethostname()
-REPO_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+REPO_DIR_PATH = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
 REPO_HOSTNAME_PATH = pathlib.Path(HOSTNAME)
 REPO_HOSTNAME_CONFIG_PATH = REPO_HOSTNAME_PATH / '.config'
 HOME_PATH = pathlib.Path.home()
@@ -110,8 +110,12 @@ def save(message: str = None):
         commit(repo)
     push(origin)
 
+
 def install():
-    print('hello')
+    host_dir_paths = [x for x in REPO_DIR_PATH.iterdir(
+    ) if x.is_dir() and x.name.startswith('host')]
+    for host_dir_path in host_dir_paths:
+        print(host_dir_path)
 
 
 def main(argv):
