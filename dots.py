@@ -9,13 +9,17 @@ import pathlib
 import datetime
 
 # Set to True to enable 'no git' mode
-# While True, all pulling/committing/pushing to the git repo (by the script) is disabled
-# Used for updated this script without committing changes everytime that the script is run
+# While True, all pulling/committing/pushing to the git repo (by the script)
+#   is disabled
+# Used for updated this script without committing changes everytime that the
+#   script is run
 NO_GIT = True
 
 # Set to True while updating this script
-# This variable won't let you run the script without passing a commit message but still lets you push the changes it copies
-# This can be useful for making sure that the code still works but with a useful commit message about the changes
+# This variable won't let you run the script without passing a commit message
+#   but still lets you push the changes it copies
+# This can be useful for making sure that the code still works but with a
+#   useful commit message about the changes
 EDITING_SCRIPT = True
 
 # Directories to copy files from/to
@@ -114,6 +118,11 @@ def save(message: str = None):
 def install():
     host_dir_paths = [x for x in REPO_DIR_PATH.iterdir(
     ) if x.is_dir() and x.name.startswith('host')]
+
+    if len(host_dir_paths) == 0:
+        print('You have no saved hosts so there is nothing to install\n'
+              'Exiting now...')
+
     for host_dir_path in host_dir_paths:
         print(host_dir_path)
 
@@ -121,10 +130,11 @@ def install():
 def main(argv):
     if NO_GIT:
         print('Running in NO_GIT mode')
-        print('Any changes to dot files will not be commited or pushed to the git repo\n')
+        print('Any changes to dot files will not be commited or pushed to the '
+              'git repo\n')
     elif EDITING_SCRIPT and len(argv) < 3:
-        print(
-            'Please enter a commit message as an argument while using EDITING_SCRIPT mode')
+        print('Please enter a commit message as an argument while using '
+              'EDITING_SCRIPT mode')
         print('Exiting now...')
         return
 
