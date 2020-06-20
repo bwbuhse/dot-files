@@ -1,0 +1,6 @@
+{
+  "python.jediEnabled":false,
+  "python.venvPath":"~/.virtualenvs",
+  "coc.preferences.formatOnType":true,
+  "coc.preferences.formatOnTypeFiletypes": ["python"]
+}

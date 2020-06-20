@@ -13,14 +13,14 @@ import datetime
 #   is disabled
 # Used for updated this script without committing changes everytime that the
 #   script is run
-NO_GIT = True
+NO_GIT = False
 
 # Set to True while updating this script
 # This variable won't let you run the script without passing a commit message
 #   but still lets you push the changes it copies
 # This can be useful for making sure that the code still works but with a
 #   useful commit message about the changes
-EDITING_SCRIPT = True
+EDITING_SCRIPT = False
 
 # Directories to copy files from/to
 HOSTNAME = 'host-' + socket.gethostname()
