@@ -31,24 +31,6 @@ fif() {
   rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
 }
 
-# Detach from current tmux session and create a new one
-# tmdn() { 
-#   if [[ -v $1 ]]; then 
-#     tmux detach -E "tmux new -A -s '$1'"; 
-#   else
-#     echo 'You need to give a session name';
-#   fi
-# }
-
-# tmda() {
-#   if [[ -v $1 ]]; then 
-#     tmux detach -E "tmux attach -t '$1'"; 
-#   else
-#     echo 'You need to give a session name';
-#   fi
-# }
-
-
 #########################
 # update terminal title #
 #########################
@@ -81,16 +63,8 @@ alias ll='exa -l'
 alias exa='exa -l'
 alias cat='bat'
 
-alias kill-zoom='pkill -9 -f zoom'
-
 alias pacman-deps="pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 
-alias vimf='cscope -Rb && vim $(fzf)'
-
-# Used to log into the kamek server that UT has with one command
-alias kamek='ssh bbuhse@kamek.ece.utexas.edu'
-
-# Stuff
 alias pac=yay  # For convenience
 
 # pacmatic needs to be run as root: https://github.com/keenerd/pacmatic/issues/35
@@ -107,18 +81,15 @@ alias vim='nvim'
 # my exports #
 ##############
 
-# These lines are just for ee461s
-export PINTOS=/home/ben/projects/os-sp20-team-bumo
-
-# For rust stuff ?? 
+# For Rust
 export PATH=$PATH:$PINTOS/utils:/home/ben/.cargo/bin
 
 # Set VA-API driver
 export LIBVA_DRIVER_NAME='vdpau'
 export VDPAU_DRIVER='nvidia'
 
-# Run presto
+# Source prezto
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # set alacritty as my default terminal
-export TERMINAL='alacritty'
+export TERMINAL='konsole'
