@@ -116,15 +116,50 @@ def save(message: str = None):
 
 
 def install():
+    '''
+    Install dot-files from a specified host
+    '''
     host_dir_paths = [x for x in REPO_DIR_PATH.iterdir(
     ) if x.is_dir() and x.name.startswith('host')]
+    host_dict = {}
+    for i in range(0, len(host_dir_paths)):
+        host_dict[i] = host_dir_paths[i]
 
     if len(host_dir_paths) == 0:
         print('You have no saved hosts so there is nothing to install\n'
               'Exiting now...')
 
-    for host_dir_path in host_dir_paths:
-        print(host_dir_path)
+    print('Select a host to install from:')
+    for index, host in host_dict.items():
+        host = host.name[host.name.find('-') + 1:]
+        print(f'[{index}] - {host}')
+
+    selected_host = int(input('\n'))
+    if selected_host not in host_dict:
+        print(f'{selected_host} is not a valid host option.\n'
+              f'Exiting now...')
+
+    selected_host_path = host_dict[selected_host]
+
+    # Copy files/dirs from the repo to their installed locations
+    for installed_path, selected_host_path in PATH_PAIRS.items():
+        dirs_to_copy = DIRS_TO_COPY.get(installed_path, {})
+        files_to_copy = FILES_TO_COPY.get(installed_path, {})
+
+        for dir_to_copy in dirs_to_copy:
+            if (selected_host_path / dir_to_copy).exists():
+                shutil.copytree(selected_host_path / dir_to_copy,
+                                installed_path / dir_to_copy,
+                                dirs_exist_ok=True)
+
+        for file_to_copy in files_to_copy:
+            if '/' in file_to_copy:
+                # We need to create any directories that don't exist already
+                inner_dirs = file_to_copy[0:file_to_copy.rfind('/')]
+                os.makedirs(installed_path / inner_dirs, exist_ok=True)
+            if (selected_host_path / file_to_copy).exists():
+                shutil.copy(selected_host_path / file_to_copy,
+                            installed_path / file_to_copy)
 
 
 def main(argv):
