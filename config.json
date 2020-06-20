@@ -1,0 +1,34 @@
+{
+  "repo_url": "TODO",
+  "repo_directory": "TODO",
+  "path_pairs": {
+    "~": "",
+    "~/.config": ".config"
+  },
+  "files_to_copy": [
+    {
+      "~": [
+        ".tmux.conf",
+        ".zshrc",
+        ".zprofile",
+        ".zpreztorc"
+      ],
+      "~/.config": [
+        "nvim/init.vim",
+        "nvim/coc-settings.json"
+      ]
+    }
+  ],
+  "dirs_to_copy": [
+    {
+      "~/.config": [
+        "alacritty",
+        "sway",
+        "waybar",
+        "i3",
+        "polybar",
+        "picom"
+      ]
+    }
+  ]
+}

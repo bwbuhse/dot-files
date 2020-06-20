@@ -7,38 +7,49 @@ import git
 import shutil
 import pathlib
 import datetime
+import json
 
 # Set to True to enable 'no git' mode
 # While True, all pulling/committing/pushing to the git repo (by the script)
 #   is disabled
 # Used for updated this script without committing changes everytime that the
 #   script is run
-NO_GIT = False
+NO_GIT = True
 
 # Set to True while updating this script
 # This variable won't let you run the script without passing a commit message
 #   but still lets you push the changes it copies
 # This can be useful for making sure that the code still works but with a
 #   useful commit message about the changes
-EDITING_SCRIPT = False
+EDITING_SCRIPT = True
+
+if pathlib.Path('config.json'):
+    with open('config.json') as config:
+        CONFIG = config.read()
+    CONFIG = json.loads(CONFIG)
 
 # Directories to copy files from/to
 HOSTNAME = 'host-' + socket.gethostname()
 REPO_DIR_PATH = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
 REPO_HOSTNAME_PATH = pathlib.Path(HOSTNAME)
-REPO_HOSTNAME_CONFIG_PATH = REPO_HOSTNAME_PATH / '.config'
-HOME_PATH = pathlib.Path.home()
-HOME_DOT_CONFIG_PATH = HOME_PATH / '.config'
+# REPO_HOSTNAME_CONFIG_PATH = REPO_HOSTNAME_PATH / '.config'
+# HOME_PATH = pathlib.Path.home()
+# HOME_DOT_CONFIG_PATH = HOME_PATH / '.config'
 
-# Dictionaries used for matching directories
+# Lists of files and directories to copy
 # Pairs of paths to copy from and their respective paths in the repo to copy to
-PATH_PAIRS = {HOME_PATH: REPO_HOSTNAME_PATH,
-              HOME_DOT_CONFIG_PATH: REPO_HOSTNAME_CONFIG_PATH}
-# Files/directories to copy
-FILES_TO_COPY = {HOME_PATH: ['.tmux.conf', '.zshrc', '.zprofile', '.zpreztorc'],
-                 HOME_DOT_CONFIG_PATH: ['nvim/init.vim', 'nvim/coc-settings.json']}
-DIRS_TO_COPY = {HOME_DOT_CONFIG_PATH: [
-    'alacritty', 'sway', 'waybar', 'i3', 'polybar', 'picom']}
+PATH_PAIRS = {}
+FILES_TO_COPY = []
+for path in CONFIG['files_to_copy']:
+    for path, files in path.items():
+        for file in files:
+            FILES_TO_COPY.append(path + "/" + file)
+
+DIRS_TO_COPY = []
+for path in CONFIG['dirs_to_copy']:
+    for path, dirs in path.items():
+        for dir_ in dirs:
+            DIRS_TO_COPY.append(path + "/" + dir_)
 
 
 def pull(origin: git.Remote):
