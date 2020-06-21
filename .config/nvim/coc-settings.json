@@ -1,0 +1,9 @@
+{
+  "python.jediEnabled": false,
+  "python.venvPath": "~/.virtualenvs",
+  "python.sortImports.path": "/home/ben/.local/bin/isort",
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnTypeFiletypes": [
+    "python"
+  ]
+}
