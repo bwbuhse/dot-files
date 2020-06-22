@@ -119,7 +119,6 @@ def save(message: str = None):
     # Add, commit, and push any changes
     add(repo)
     diff = repo.git.diff('HEAD~', REPO_HOSTNAME_PATH).strip()
-    print(diff)
     if len(diff) > 0:
         if message != None:
             commit(repo, message)
