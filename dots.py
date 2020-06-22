@@ -137,7 +137,7 @@ def install():
     for i in range(0, len(host_dir_paths)):
         host_dict[i] = host_dir_paths[i]
 
-    if len(host_dir_paths) == 0:
+    if len(host_dir_paths) > 0:
         print('You have no saved hosts so there is nothing to install\n'
               'Exiting now...')
 
