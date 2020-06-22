@@ -27,6 +27,13 @@
         "polybar",
         "picom"
       ]
+    },
+    {
+      "installed_path": "/efi/EFI/refind",
+      "repo_path": "refind",
+      "files_to_copy": [
+        "refind.conf"
+      ]
     }
   ]
 }

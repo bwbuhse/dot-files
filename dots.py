@@ -100,6 +100,7 @@ def save(message: str = None):
     for path in PATHS:
         installed_path = Path.expanduser(Path(path.path_pair[0]))
         repo_path = REPO_HOSTNAME_PATH / path.path_pair[1]
+        os.makedirs(repo_path, exist_ok=True)
 
         for dir_to_copy in path.dirs_to_copy:
             if (installed_path / dir_to_copy).exists():
@@ -115,12 +116,11 @@ def save(message: str = None):
                 shutil.copy(installed_path / file_to_copy,
                             repo_path / file_to_copy)
 
-    # We only want to make a commit if there was a change
-    diff = repo.git.diff(REPO_HOSTNAME_PATH).strip()
+    # Add, commit, and push any changes
+    add(repo)
+    diff = repo.git.diff('HEAD~', REPO_HOSTNAME_PATH).strip()
+    print(diff)
     if len(diff) > 0:
-        print('aadsfasdfadfs')
-        # Commit, add, push all changes
-        add(repo)
         if message != None:
             commit(repo, message)
         else:
