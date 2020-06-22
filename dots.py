@@ -117,6 +117,7 @@ def save(message: str = None):
 
     # We only want to make a commit if there was a change
     diff = repo.git.diff(REPO_HOSTNAME_PATH).strip()
+    print(len(diff))
     if len(diff) >= 0:
         print('aadsfasdfadfs')
         # Commit, add, push all changes
