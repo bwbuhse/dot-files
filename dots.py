@@ -25,7 +25,7 @@ NO_GIT = False
 #   but still lets you push the changes it copies
 # This can be useful for making sure that the code still works but with a
 #   useful commit message about the changes
-EDITING_SCRIPT = True
+EDITING_SCRIPT = False
 
 
 def load_config() -> List[PathInfo]:
