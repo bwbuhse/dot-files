@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import socket
-import git
-import shutil
-import pathlib
 import datetime
+import json
+import os
+import shutil
+import socket
+import sys
+from pathlib import Path
+from typing import List
+
+import git
+
+from path_info import PathInfo
 
 # Set to True to enable 'no git' mode
 # While True, all pulling/committing/pushing to the git repo (by the script)
@@ -22,23 +27,28 @@ NO_GIT = False
 #   useful commit message about the changes
 EDITING_SCRIPT = False
 
+
+def load_config() -> List[PathInfo]:
+    if Path('config.json'):
+        with open('config.json') as config:
+            config = config.read()
+            config = json.loads(config)
+
+    paths: List[PathInfo] = []
+    for path in config['paths']:
+        path_pair = path['installed_path'], path['repo_path']
+        files_to_copy = path.get('files_to_copy', [])
+        dirs_to_copy = path.get('dirs_to_copy', [])
+        paths.append(PathInfo(path_pair, files_to_copy, dirs_to_copy))
+
+    return paths
+
+
 # Directories to copy files from/to
 HOSTNAME = 'host-' + socket.gethostname()
-REPO_DIR_PATH = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
-REPO_HOSTNAME_PATH = pathlib.Path(HOSTNAME)
-REPO_HOSTNAME_CONFIG_PATH = REPO_HOSTNAME_PATH / '.config'
-HOME_PATH = pathlib.Path.home()
-HOME_DOT_CONFIG_PATH = HOME_PATH / '.config'
-
-# Dictionaries used for matching directories
-# Pairs of paths to copy from and their respective paths in the repo to copy to
-PATH_PAIRS = {HOME_PATH: REPO_HOSTNAME_PATH,
-              HOME_DOT_CONFIG_PATH: REPO_HOSTNAME_CONFIG_PATH}
-# Files/directories to copy
-FILES_TO_COPY = {HOME_PATH: ['.tmux.conf', '.zshrc', '.zprofile', '.zpreztorc'],
-                 HOME_DOT_CONFIG_PATH: ['nvim/init.vim', 'nvim/coc-settings.json']}
-DIRS_TO_COPY = {HOME_DOT_CONFIG_PATH: [
-    'alacritty', 'sway', 'waybar', 'i3', 'polybar', 'picom']}
+REPO_DIR_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
+REPO_HOSTNAME_PATH = Path(HOSTNAME)
+PATHS: List[PathInfo] = load_config()
 
 
 def pull(origin: git.Remote):
@@ -85,19 +95,18 @@ def save(message: str = None):
     if os.path.exists(HOSTNAME) and os.path.isdir(HOSTNAME):
         shutil.rmtree(HOSTNAME)
     REPO_HOSTNAME_PATH.mkdir()
-    REPO_HOSTNAME_CONFIG_PATH.mkdir()
 
     # Copy files/dirs from their original locations into the repo
-    for installed_path, repo_path in PATH_PAIRS.items():
-        dirs_to_copy = DIRS_TO_COPY.get(installed_path, {})
-        files_to_copy = FILES_TO_COPY.get(installed_path, {})
+    for path in PATHS:
+        installed_path = Path.expanduser(Path(path.path_pair[0]))
+        repo_path = REPO_HOSTNAME_PATH / path.path_pair[1]
 
-        for dir_to_copy in dirs_to_copy:
+        for dir_to_copy in path.dirs_to_copy:
             if (installed_path / dir_to_copy).exists():
                 shutil.copytree(installed_path / dir_to_copy,
                                 repo_path / dir_to_copy)
 
-        for file_to_copy in files_to_copy:
+        for file_to_copy in path.files_to_copy:
             if '/' in file_to_copy:
                 # We need to create any directories that don't exist already
                 inner_dirs = file_to_copy[0:file_to_copy.rfind('/')]
@@ -142,17 +151,17 @@ def install():
     selected_host_path = host_dict[selected_host]
 
     # Copy files/dirs from the repo to their installed locations
-    for installed_path, selected_host_path in PATH_PAIRS.items():
-        dirs_to_copy = DIRS_TO_COPY.get(installed_path, {})
-        files_to_copy = FILES_TO_COPY.get(installed_path, {})
+    for path in PATHS:
+        installed_path = Path.expanduser(Path(path.path_pair[0]))
+        repo_path = selected_host_path / path.path_pair[1]
 
-        for dir_to_copy in dirs_to_copy:
+        for dir_to_copy in path.dirs_to_copy:
             if (selected_host_path / dir_to_copy).exists():
-                shutil.copytree(selected_host_path / dir_to_copy,
-                                installed_path / dir_to_copy,
+                shutil.copytree(installed_path / dir_to_copy,
+                                repo_path / dir_to_copy,
                                 dirs_exist_ok=True)
 
-        for file_to_copy in files_to_copy:
+        for file_to_copy in path.files_to_copy:
             if '/' in file_to_copy:
                 # We need to create any directories that don't exist already
                 inner_dirs = file_to_copy[0:file_to_copy.rfind('/')]

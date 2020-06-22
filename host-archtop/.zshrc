@@ -93,3 +93,4 @@ source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # set alacritty as my default terminal
 export TERMINAL='konsole'
+alias config='/usr/bin/git --git-dir=/home/ben/.cfg/ --work-tree=/home/ben'
