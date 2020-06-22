@@ -25,7 +25,7 @@ NO_GIT = False
 #   but still lets you push the changes it copies
 # This can be useful for making sure that the code still works but with a
 #   useful commit message about the changes
-EDITING_SCRIPT = False
+EDITING_SCRIPT = True
 
 
 def load_config() -> List[PathInfo]:
@@ -115,13 +115,16 @@ def save(message: str = None):
                 shutil.copy(installed_path / file_to_copy,
                             repo_path / file_to_copy)
 
-    # Commit, add, push all changes
-    add(repo)
-    if message != None:
-        commit(repo, message)
-    else:
-        commit(repo)
-    push(origin)
+    # We only want to make a commit if there was a change
+    diff = repo.git.diff(REPO_HOSTNAME_PATH).strip()
+    if len(diff) >= 0:
+        # Commit, add, push all changes
+        add(repo)
+        if message != None:
+            commit(repo, message)
+        else:
+            commit(repo)
+        push(origin)
 
 
 def install():
