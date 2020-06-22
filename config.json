@@ -1,27 +1,25 @@
 {
   "repo_url": "TODO",
   "repo_directory": "TODO",
-  "path_pairs": {
-    "~": "",
-    "~/.config": ".config"
-  },
-  "files_to_copy": [
+  "paths": [
     {
-      "~": [
+      "installed_path": "~",
+      "repo_path": "",
+      "files_to_copy": [
         ".tmux.conf",
         ".zshrc",
         ".zprofile",
         ".zpreztorc"
-      ],
-      "~/.config": [
+      ]
+    },
+    {
+      "installed_path": "~/.config",
+      "repo_path": ".config",
+      "files_to_copy": [
         "nvim/init.vim",
         "nvim/coc-settings.json"
-      ]
-    }
-  ],
-  "dirs_to_copy": [
-    {
-      "~/.config": [
+      ],
+      "dirs_to_copy": [
         "alacritty",
         "sway",
         "waybar",
