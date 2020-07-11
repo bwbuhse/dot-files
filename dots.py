@@ -11,6 +11,7 @@ from typing import List
 
 import git
 
+from config import Config
 from path_info import PathInfo
 
 # Set to True to enable 'no git' mode
@@ -28,27 +29,31 @@ NO_GIT = False
 EDITING_SCRIPT = False
 
 
-def load_config() -> List[PathInfo]:
-    if Path('config.json'):
-        with open('config.json') as config:
-            config = config.read()
-            config = json.loads(config)
+def load_config() -> Config:
+    config_json_path = Path.home() / '.config/dotman/config.json'
+    if config_json_path.exists():
+        with open(config_json_path) as config_json:
+            config_json = config_json.read()
+            config_json = json.loads(config_json)
 
     paths: List[PathInfo] = []
-    for path in config['paths']:
+    for path in config_json['paths']:
         path_pair = path['installed_path'], path['repo_path']
         files_to_copy = path.get('files_to_copy', [])
         dirs_to_copy = path.get('dirs_to_copy', [])
         paths.append(PathInfo(path_pair, files_to_copy, dirs_to_copy))
 
-    return paths
+    repo_path = Path.home() / '.dotman'
+    if config_json['repo_path']:
+        repo_path = Path.expanduser(Path(config_json['repo_path']))
+
+    return Config(repo_path, paths)
 
 
 # Directories to copy files from/to
 HOSTNAME = 'host-' + socket.gethostname()
 REPO_DIR_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
 REPO_HOSTNAME_PATH = Path(HOSTNAME)
-PATHS: List[PathInfo] = load_config()
 
 
 def pull(origin: git.Remote):
@@ -75,7 +80,7 @@ def commit(repo: git.Repo, message: str = None):
                               ' ' + str(datetime.datetime.now()))
 
 
-def save(message: str = None):
+def save(config: Config, message: str = None):
     '''
     Pulls any changes from the git repo.
     Deletes the directory in the repo for the current host then re-creates it.
@@ -97,7 +102,7 @@ def save(message: str = None):
     REPO_HOSTNAME_PATH.mkdir()
 
     # Copy files/dirs from their original locations into the repo
-    for path in PATHS:
+    for path in config.path_infos:
         installed_path = Path.expanduser(Path(path.path_pair[0]))
         repo_path = REPO_HOSTNAME_PATH / path.path_pair[1]
         os.makedirs(repo_path, exist_ok=True)
@@ -127,7 +132,7 @@ def save(message: str = None):
         push(origin)
 
 
-def install():
+def install(config: Config):
     '''
     Install dot-files from a specified host
     '''
@@ -154,7 +159,7 @@ def install():
     selected_host_path = host_dict[selected_host]
 
     # Copy files/dirs from the repo to their installed locations
-    for path in PATHS:
+    for path in config.path_infos:
         installed_path = Path.expanduser(Path(path.path_pair[0]))
         repo_path = selected_host_path / path.path_pair[1]
 
@@ -185,15 +190,21 @@ def main(argv):
         print('Exiting now...')
         return
 
+    config = load_config()
+
+    # Create the repo directory if it doesn't already exist
+    if not config.repo_path.exists():
+        os.makedirs(config.repo_path)
+
     if len(argv) <= 1:
-        save()
+        save(config)
     elif argv[1] == 'save':
         if len(argv) > 2:
-            save(argv[2])
+            save(config, argv[2])
         else:
-            save()
+            save(config)
     elif argv[1] == 'install':
-        install()
+        install(config)
     else:
         print(argv[1], ' is not a valid argument for dots.py')
 
