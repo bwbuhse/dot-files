@@ -1,0 +1,40 @@
+{
+  "_repo_url": "git@gitlab.com:bwbuhse/dot-files.git",
+  "repo_path": "~/projects/dot-files-testing",
+  "paths": [
+    {
+      "installed_path": "~",
+      "repo_path": "",
+      "files_to_copy": [
+        ".tmux.conf",
+        ".zshrc",
+        ".zprofile",
+        ".zpreztorc"
+      ]
+    },
+    {
+      "installed_path": "~/.config",
+      "repo_path": ".config",
+      "files_to_copy": [
+        "nvim/init.vim",
+        "nvim/coc-settings.json"
+      ],
+      "dirs_to_copy": [
+        "alacritty",
+        "sway",
+        "waybar",
+        "i3",
+        "polybar",
+        "picom",
+        "dotboy"
+      ]
+    },
+    {
+      "installed_path": "/efi/EFI/refind",
+      "repo_path": "refind",
+      "files_to_copy": [
+        "refind.conf"
+      ]
+    }
+  ]
+}
