@@ -62,14 +62,12 @@ source /usr/bin/virtualenvwrapper_lazy.sh
 alias ll='exa -l'
 alias exa='exa -l'
 alias cat='bat'
+alias pac=yay  # For convenience
+alias vi='nvim'
+alias vim='nvim'
 
 alias pacman-deps="pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 
-alias pac=yay  # For convenience
-
-alias vi='nvim'
-
-alias vim='nvim'
 
 ##############
 # my exports #
