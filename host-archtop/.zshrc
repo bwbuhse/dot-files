@@ -66,6 +66,9 @@ alias pac=yay  # For convenience
 alias vi='nvim'
 alias vim='nvim'
 
+alias pkg_dotboy='python3 setup.py sdist bdist_wheel'
+alias upld_dotboy='twine upload dist/*'
+
 alias pacman-deps="pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 
 
