@@ -6,6 +6,7 @@
       "installed_path": "~",
       "repo_path": "",
       "files_to_copy": [
+        ".bashrc",
         ".tmux.conf",
         ".zshrc",
         ".zprofile",
