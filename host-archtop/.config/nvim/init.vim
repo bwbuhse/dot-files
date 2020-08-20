@@ -35,7 +35,6 @@ set encoding=utf-8
 
 syntax on
 
-set textwidth=80
 set colorcolumn=+1
 
   " won't work until the colorscheme is installed
