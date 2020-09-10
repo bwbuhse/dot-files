@@ -78,3 +78,5 @@ if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]
   exec startx
 fi
 
+# Add ruby gems to path
+export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
