@@ -91,9 +91,15 @@ alias vim='nvim'
 # For rust stuff ?? 
 export PATH=$PATH:/home/ben/.cargo/bin
 
+# For ruby & gems
+export PATH=$PATH:/home/ben/.gem/ruby/2.7.0/bin
+
 # Set VA-API driver
 export LIBVA_DRIVER_NAME='iHD'
 export VDPAU_DRIVER='va_gl'
 
 # Run prezto
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+
+export WORKON_HOME=~/.virtualenvs
+source /usr/bin/virtualenvwrapper.sh
