@@ -93,3 +93,5 @@ alias config='/usr/bin/git --git-dir=/home/ben/.cfg/ --work-tree=/home/ben'
 
 # set an alias to easily get to my classes for the semester
 export COURSES=/home/ben/courses/fall2020/
+
+source ~/.keys
